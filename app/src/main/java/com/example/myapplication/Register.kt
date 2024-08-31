@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -25,14 +24,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Register() {
+fun Register(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -59,6 +57,7 @@ fun Register() {
         }
         item {
             TextField(
+                isError = email.isEmpty(),
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
@@ -69,6 +68,7 @@ fun Register() {
         }
         item {
             TextField(
+                isError = password.isEmpty(),
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
@@ -79,6 +79,7 @@ fun Register() {
             )        }
         item {
             TextField(
+                isError = confirmPassword.isEmpty(),
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
                 label = { Text("Confirm Password") },
@@ -114,7 +115,7 @@ fun Register() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = "have an account?")
-                TextButton(onClick = { }) {
+                TextButton(onClick = {  navController.navigate("loginScreen")}) {
                     Text(text = "Login", color = Color.Blue, textAlign = TextAlign.End)
 
                 }
@@ -124,10 +125,10 @@ fun Register() {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun RegisterPreview() {
-    MyApplicationTheme {
-        Register()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun RegisterPreview() {
+//    MyApplicationTheme {
+//        Register()
+//    }
+//}

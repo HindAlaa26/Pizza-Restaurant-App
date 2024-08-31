@@ -12,13 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import androidx.navigation.NavController
 
 @Composable
-fun welcomeScreen(){
+fun welcomeScreen(navController: NavController){
  LazyColumn(
      modifier = Modifier.fillMaxSize() ,
      horizontalAlignment = Alignment.CenterHorizontally,
@@ -37,17 +36,17 @@ fun welcomeScreen(){
        Text(text = "pizza is always the answer")
      }
      item {
-Button(onClick = { }, modifier = Modifier.padding(29.dp),colors = ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color.Black)) {
+Button(onClick = {  navController.navigate("loginScreen")}, modifier = Modifier.padding(29.dp),colors = ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color.Black)) {
     Text(text = "Let's Start")
 }
      }
 
  }
 }
-@Preview(showBackground = true)
-@Composable
-fun WelcomePreview() {
-    MyApplicationTheme {
-        welcomeScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun WelcomePreview() {
+//    MyApplicationTheme {
+//        welcomeScreen()
+//    }
+//}
