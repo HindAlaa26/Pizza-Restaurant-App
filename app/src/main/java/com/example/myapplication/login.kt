@@ -124,7 +124,8 @@ fun Login(navController: NavController) {
         item {
             Button(
                 onClick = {
-
+                   if(email == "hindalaa@gmail.com" && password == "123")
+                       navController.navigate("homeScreen")
                 },
             ) {
                 Text(text = "Login", textAlign = TextAlign.Center)

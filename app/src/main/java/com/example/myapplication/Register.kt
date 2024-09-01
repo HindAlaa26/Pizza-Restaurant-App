@@ -103,7 +103,11 @@ fun Register(navController: NavController) {
         }
         item {
             Button(
-                onClick = { },
+                onClick = {
+                    if(email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty())
+                        if (password == confirmPassword)
+                            navController.navigate("loginScreen")
+                },
             ) {
                 Text(text = "Register " )
             }
