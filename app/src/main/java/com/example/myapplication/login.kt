@@ -42,28 +42,37 @@ import androidx.navigation.NavController
 fun Login(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var isVisible by remember { mutableStateOf(value= false) }
-    var setTransformation = if (isVisible) PasswordVisualTransformation() else VisualTransformation.None
-    LazyColumn (
+    var isVisible by remember { mutableStateOf(value = false) }
+    var setTransformation =
+        if (isVisible) PasswordVisualTransformation() else VisualTransformation.None
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
 
         item {
             Image(
                 painter = painterResource(id = R.drawable.show),
-                contentDescription = "Show Image" ,
+                contentDescription = "Show Image",
                 modifier = Modifier.fillMaxWidth()
             )
         }
         item {
-            Text(text = "Welcome back again", color = Color.DarkGray, modifier = Modifier.padding(8.dp))
+            Text(
+                text = "Welcome back again",
+                color = Color.DarkGray,
+                modifier = Modifier.padding(8.dp)
+            )
         }
         item {
-            Text(text = "use form below to login", color = Color.Black, modifier = Modifier.padding(8.dp))
+            Text(
+                text = "use form below to login",
+                color = Color.Black,
+                modifier = Modifier.padding(8.dp)
+            )
         }
         item {
             TextField(
@@ -73,12 +82,12 @@ fun Login(navController: NavController) {
                     keyboardType = KeyboardType.Email
                 ),
                 leadingIcon = {
-                              Icon(Icons.Filled.Email, contentDescription = "Email")
+                    Icon(Icons.Filled.Email, contentDescription = "Email")
                 },
                 trailingIcon = {
-                               IconButton(onClick = {email = ""}) {
-                                Icon(Icons.Filled.Clear, contentDescription = "clear")
-                               }
+                    IconButton(onClick = { email = "" }) {
+                        Icon(Icons.Filled.Clear, contentDescription = "clear")
+                    }
                 },
                 onValueChange = { email = it },
                 label = { Text("Email") },
@@ -101,31 +110,39 @@ fun Login(navController: NavController) {
                 },
                 trailingIcon = {
                     IconButton(onClick = {
-                       isVisible = !isVisible
+                        isVisible = !isVisible
                     }) {
                         Icon(Icons.Filled.Check, contentDescription = "clear")
                     }
                 },
-                visualTransformation =  setTransformation,
+                visualTransformation = setTransformation,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-            )        }
-     item {
-         Row(horizontalArrangement= Arrangement.End, modifier = Modifier.fillMaxWidth()) {
+            )
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
 
-             TextButton(onClick = { }) {
-                 Text(text = "Forget Password", color = Color.Gray, textAlign = TextAlign.End)
+                TextButton(onClick = { }) {
+                    Text(text = "Forget Password", color = Color.Gray, textAlign = TextAlign.End)
 
-             }
-         }
-     }
+                }
+            }
+        }
 
         item {
             Button(
                 onClick = {
-                   if(email == "hindalaa@gmail.com" && password == "123")
-                       navController.navigate("homeScreen")
+
+                    if (email == "hindalaa@gmail.com" && password == "123") {
+                        navController.navigate("homeScreen")
+                    }
+//                   if(email == "hindalaa@gmail.com" && password == "123")
+//                   { println("test")
+//                       navController.navigate("homeScreen")}else{                       println("test")
+//                       println("test3333")
+//                   }
                 },
             ) {
                 Text(text = "Login", textAlign = TextAlign.Center)
@@ -133,15 +150,15 @@ fun Login(navController: NavController) {
         }
         item {
             Row(
-                horizontalArrangement= Arrangement.Center,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = "Don't have account?")
-                TextButton(onClick = {  navController.navigate("registerScreen")}) {
+                TextButton(onClick = { navController.navigate("registerScreen") }) {
                     Text(text = "Register Now", color = Color.Blue, textAlign = TextAlign.End)
 
-                }
+                               }
             }
         }
     }

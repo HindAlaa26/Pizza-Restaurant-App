@@ -1,4 +1,5 @@
 package com.example.myapplication
+import Home
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -46,10 +47,22 @@ fun myApp(){
         {
             Register(navController= navController)
         }
-        composable("homeScreen")
+        composable("Home")
         {
-            HomeScreen(navController= navController)
+            Home(navController= navController)
         }
+        composable("search")
+        {
+            Search(navController= navController)
+        }
+        composable("profile")
+        {
+            Profile(navController= navController)
+        }
+        composable("homeScreen")
+
+
+        { HomeScreen(navController = navController) }
     }
 }
 
