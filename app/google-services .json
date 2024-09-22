@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948223172046",
+    "project_id": "restaurant-63e10",
+    "storage_bucket": "restaurant-63e10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948223172046:android:eabfac7c73105b52019f9f",
+        "android_client_info": {
+          "package_name": "com.pizzaRestaurant.RestaurantApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948223172046-7mp6tuccvdll7ujb8l47gc5odqeiauf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmaSwI-zR9sMhU8GKQy5gM6h_a2mw2dS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948223172046-7mp6tuccvdll7ujb8l47gc5odqeiauf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

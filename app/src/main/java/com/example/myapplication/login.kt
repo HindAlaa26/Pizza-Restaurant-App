@@ -1,7 +1,9 @@
 package com.example.myapplication
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +15,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,45 +39,60 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import kotlin.math.log
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Login(navController: NavController) {
+fun Login(navController: NavController= rememberNavController()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isVisible by remember { mutableStateOf(value = false) }
     var setTransformation =
         if (isVisible) PasswordVisualTransformation() else VisualTransformation.None
-    LazyColumn(
+    var showMessage by remember { mutableStateOf(false)}
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+       if (showMessage) {
 
-        item {
-            Image(
-                painter = painterResource(id = R.drawable.show),
-                contentDescription = "Show Image",
-                modifier = Modifier.fillMaxWidth()
+            AlertDialog(
+                title = { Text(text = "Error") },
+                text = { Text(text = "user not found or password is wrong")},
+                onDismissRequest = {showMessage = false},
+                confirmButton = {
+                    Button(onClick = { Log.e("error","user not found")
+                    showMessage = false
+                    }) {
+                        Text(text = "Confirm")
+                    }
+                }
             )
-        }
-        item {
-            Text(
-                text = "Welcome back again",
-                color = Color.DarkGray,
-                modifier = Modifier.padding(8.dp)
-            )
-        }
-        item {
+       }
+        Image(
+            painter = painterResource(id = R.drawable.show),
+            contentDescription = "Show Image",
+            modifier = Modifier.fillMaxWidth()
+        )
+        Text(
+            text = "Welcome back again",
+            color = Color.DarkGray,
+            modifier = Modifier.padding(8.dp)
+        )
+
             Text(
                 text = "use form below to login",
                 color = Color.Black,
                 modifier = Modifier.padding(8.dp)
             )
-        }
-        item {
+
             TextField(
                 isError = email.isEmpty(),
                 value = email,
@@ -95,8 +113,7 @@ fun Login(navController: NavController) {
                     .fillMaxWidth()
                     .padding(8.dp)
             )
-        }
-        item {
+
             TextField(
                 isError = password.isEmpty(),
                 value = password,
@@ -112,16 +129,17 @@ fun Login(navController: NavController) {
                     IconButton(onClick = {
                         isVisible = !isVisible
                     }) {
-                        Icon(Icons.Filled.Check, contentDescription = "clear")
+                        val icon = if (isVisible) Icons.Filled.Lock else Icons.Filled.Clear
+                        Icon(icon, contentDescription = if (isVisible) "Hide password" else "Show password")
                     }
+
                 },
                 visualTransformation = setTransformation,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
             )
-        }
-        item {
+
             Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
 
                 TextButton(onClick = { }) {
@@ -129,27 +147,30 @@ fun Login(navController: NavController) {
 
                 }
             }
-        }
 
-        item {
-            Button(
-                onClick = {
-
-                    if (email == "hindalaa@gmail.com" && password == "123") {
-                        navController.navigate("homeScreen")
+        Button(
+            onClick = {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            try {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            println("login success")
+                        } else {
+                            println("login failure")
+                        }
                     }
-//                   if(email == "hindalaa@gmail.com" && password == "123")
-//                   { println("test")
-//                       navController.navigate("homeScreen")}else{                       println("test")
-//                       println("test3333")
-//                   }
-                },
-            ) {
-                Text(text = "Login", textAlign = TextAlign.Center)
+            } catch (e: FirebaseAuthException) {
+                Log.e("login", "$e")
             }
         }
-        item {
-            Row(
+            }
+        ) {
+            Text(text = "Login", textAlign = TextAlign.Center)
+        }
+
+
+        Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -160,14 +181,14 @@ fun Login(navController: NavController) {
 
                                }
             }
-        }
+
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun LoginPreview() {
-//    MyApplicationTheme {
-//        Login()
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun LoginPreview() {
+    MyApplicationTheme {
+        Login()
+    }
+}
